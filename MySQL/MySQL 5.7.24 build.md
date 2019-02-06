@@ -4,7 +4,7 @@
 
 <div># 5.7 stable 버전 다운 위해서 깃허브에서 클론해오깅 .. mysql 사이트 이런데서 말구 ..</div>
 
-<div># clone 해오면 브랜치는 기본저긍로 8.0으로 되어 있을 것이기 때문에 git checkout으로 5.7로 옮겨가자.  </div>
+<div># clone 해오면 브랜치는 기본적으로 8.0으로 되어 있을 것이기 때문에 git checkout으로 5.7로 옮겨가자.  </div>
 
 <div><참고 사이트></div>
 
@@ -12,19 +12,19 @@
 
 <div><소스 코드를 통해 MySQL 설치하기></div>
 
-<div>1\. 다운로드 받고, 압축 풀기</div>
+<div>1. 다운로드 받고, 압축 풀기</div>
 
-<div>     cd [wanted directory] # 보통 home 하위 디렉토리에 지정</div>
+<div>    '''{.bash} cd [wanted directory] # 보통 home 하위 디렉토리에 지정</div>
 
 <div>     wget [download link]</div>
 
 <div>     tar -xvf [name]</div>
 
-<div>     cd [extracted directory]</div>
+<div>     cd [extracted directory] '''</div>
 
 <div>     #현재 디렉토리는 압축이 풀려진 mysql 코드. 예를 들어 /mysql-5.7.24/</div>
 
-<div>2\. 필요한 라이브러리 설치하기</div>
+<div>2. 필요한 라이브러리 설치하기</div>
 
 <div>      apt-get install build-essential cmake libreadline6-dev libncurses5-dev</div>
 
