@@ -1,4 +1,4 @@
-\# 본 mysql은 8.0버젼이 아닌 5.7 버젼 입니다.  
+\# 본 mysql은 8.0버젼이 아닌 **5.7** 버젼 입니다.  
 
 \# 5.7 stable 버전 다운 위해서 깃허브에서 클론해오깅 .. mysql 사이트 이런데서 말구 ..
 
@@ -6,25 +6,26 @@
 
 <참고 사이트>
 
-[<http://bluexmas.tistory.com/631](http://bluexmas.tistory.com/631)>  : 요게 우리 상황이랑 가장 적합함.   (걍 이거 따라하고 아래는 참고 용)
+[(http://bluexmas.tistory.com/631)]  : 요게 우리 상황이랑 가장 적합함.   (걍 이거 따라하고 아래는 참고 용)
 
-**<소스 코드를 통해 MySQL 설치하기>**
+# **<소스 코드를 통해 MySQL 5.7.24 설치하기>**
 
-1. **다운로드 받고, 압축 풀기**
+## 다운로드 받고, 압축 풀기
 
-​     `cd [wanted directory] # 보통 home 하위 디렉토리에 지정`
-
-​     wget [download link]
-
-​     tar -xvf [name]
-
-​     `cd [extracted directory]` 
+```bash
+cd [wanted directory] # 보통 home 하위 디렉토리에 지정
+wget [download link]
+tar -xvf [name]
+cd [extracted directory]
+```
 
 ​     \#현재 디렉토리는 압축이 풀려진 mysql 코드. 예를 들어 /mysql-5.7.24/
 
-2. **필요한 라이브러리 설치하기**
+## 필요한 라이브러리 설치하기
 
-​      `apt-get install build-essential cmake libreadline6-dev libncurses5-dev`
+```bash
+apt-get install build-essential cmake libreadline6-dev libncurses5-dev
+```
 
 ​     \+ 추가적으로 'boost' 를 반드시 설치해야한다.  
 
@@ -42,7 +43,7 @@
 
 ​     \+ bison도 설치하자. (sudo apt install bision)
 
-3\. **CMAKE 하기**
+## CMAKE 하기
 
 ​     이게 제일 까다롭고 에러가 많이 나는 부분이다.
 
@@ -54,46 +55,48 @@
 
 ​     아래는 내가 사용한 CMAKE 옵션들이고, 각자 뭔 역할을 하는지 살펴보자.  
 
-`cmake \`
+```bash
+cmake \
 
-`DCMAKE_INSTALL_PREFIX=/home/kyungmin/MySQL/workspace \     #실제 설치가 되는 부분`
+DCMAKE_INSTALL_PREFIX=/home/kyungmin/MySQL/workspace \     #실제 설치가 되는 부분
 
-`DMYSQL_DATADIR=/home/kyungmin/MySQL/data \     #데이터 및 로그가 기록되는 부분`
+DMYSQL_DATADIR=/home/kyungmin/MySQL/data \     #데이터 및 로그가 기록되는 부분
 
-`DENABLED_LOCAL_INFILE=1 \`
+DENABLED_LOCAL_INFILE=1 \
 
-`DDEFAULT_CHARSET=utf8 \`
+DDEFAULT_CHARSET=utf8 \
 
-`DDEFAULT_COLLATION=utf8_general_ci \`
+DDEFAULT_COLLATION=utf8_general_ci \
 
-`DMYSQL_UNIX_ADDR=/tmp/mysql.sock \     #소켓 저장 위치`
+DMYSQL_UNIX_ADDR=/tmp/mysql.sock \     #소켓 저장 위치
 
-`DMYSQL_TCP_PORT=3306 \     #포트번호`
+DMYSQL_TCP_PORT=3306 \     #포트번호
 
-`DSYSCONFDIR=/home/kyungmin/MySQL/config \     #본인의 my.cnf를 어디다 저장할 것인지`
+DSYSCONFDIR=/home/kyungmin/MySQL/config \     #본인의 my.cnf를 어디다 저장할 것인지
 
-`DWITH_EXTRA_CHARSETS=all \`
+DWITH_EXTRA_CHARSETS=all \
 
-`DWITH_INNOBASE_STORAGE_ENGINE=1 \`
+DWITH_INNOBASE_STORAGE_ENGINE=1 \
 
-`DWITH_ARCHIVE_STORAGE_ENGINE=1 \`
+DWITH_ARCHIVE_STORAGE_ENGINE=1 \
 
-`DDOWNLOAD_BOOST=1 \`
+DDOWNLOAD_BOOST=1 \
 
-`DWITH_BOOST=../boost_1_59_0     #반드시 필요한 boost의 압축 푼 파일`
+DWITH_BOOST=../boost_1_59_0     #반드시 필요한 boost의 압축 푼 파일
+```
 
 1. DCMAKE_INSTALL_PREFIX: compile result directory
 2. DMYSQL_DATADIR: data loading directory
 3. DSYSCONFDIR: your own mysql.cnf or my.cnf
 4. DWITH_BOOST: boost source directory
 
-4\. make
+## make
 
-​     `make`
-
-​     make test
-
-​     sudo make install
+```bash
+make
+make test
+sudo make install
+```
 
 ​     을 차례로 하면 되는데, 참고할 사항 두개
 
@@ -103,19 +106,21 @@
 
 ​     \- make install할 때 반드시 sudo를 붙이자.  
 
-5\. my.cnf
+## my.cnf
 
-​     : 원래는 my.cnf가 위에서 지정한 DSYCONFIDIR 위치에 자동적으로 만들어져야 하는데,  
+ 원래는 my.cnf가 위에서 지정한 DSYCONFIDIR 위치에 자동적으로 만들어져야 하는데,  
 
-​     내가 했을 때는 안그랬음 .. . .
+내가 했을 때는 안그랬음 .. . .
 
-​     그래서 한 방법은 종혁이 형이 주신(혹은 인터넷에 돌아다니는 표준 cnf 파일들) my.cnf를 가져와서 config에 넣은 다음에 내 상황에 맞게 고친거!
+그래서 한 방법은 종혁이 형이 주신(혹은 인터넷에 돌아다니는 표준 cnf 파일들) my.cnf를 가져와서 config에 넣은 다음에 내 상황에 맞게 고친거!
 
-6\. mysql.server 고치기  
+## mysql.server 고치기  
 
-​      블로그를 보면  
+ 블로그를 보면  
 
-`sudo cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld`
+```bash
+sudo cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+```
 
 이렇게 옮기고 나서 고치는 부분이 있는데,  
 
@@ -125,11 +130,13 @@ basedir / datadir밖에 없다.
 
 얘도 cmake할 때 지정해둔 path로 동일하게 하면 됨.
 
-7\. 실행 및 확인하기
+## 실행 및 확인하기
 
-​     mysql이 빌드 된 폴더에 들어가면 /bin 폴더가 있을 것.  거기 들어가서  
+mysql이 빌드 된 폴더에 들어가면 /bin 폴더가 있을 것.  거기 들어가서  
 
-`./mysqld_safe --defaults-file=/path/to/my.cnf --skip-grant-tables &`
+```bash
+./mysqld_safe --defaults-file=/path/to/my.cnf --skip-grant-tables &
+```
 
 (뒤에 반드시 & 붙여서 백그라운드에서 실행되고 있도록 만들기)
 
@@ -143,13 +150,13 @@ ps -al | grep mysql
 
 그 터미널 창에서  
 
-`./mysqladmin shutdown`
+```bash
+./mysqladmin shutdown
+```
 
 했을 때 꺼진 것처럼 문구가 ended 하고 나오면 성공.  
 
-\-----
-
-troubleshooting
+## troubleshooting
 
 1\. my.cnf가 안생긴다 ?
 
@@ -165,4 +172,4 @@ troubleshooting
 
 가끔 가다 보면 폴더나 파일을 못 만들거나 못 열겠다는 경우가 있는데,
 
-이건 퍼미션 문제기 때문에 나는 걍 sudo chown 777 ? 로 해결했다.  
+이건 퍼미션 문제기 때문에 나는 걍 sudo chown 777 로 해결했다.  
